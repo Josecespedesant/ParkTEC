@@ -22,3 +22,13 @@ export const searchParkingLot = (arg)=>{
         return "No se encuentra dicho parqueo";
     }
 }
+
+export const deleteParkingLot = (arg)=>{
+    const index = parseInt(arg);
+    if(parkingLots.has(index) && parkingLots.get(index)[0] === 0){
+        parkingLots.delete(index);
+        return "Se ha borrado el parqueo en la posición ".concat(arg);
+    }else{
+        return "No se encuentra dicho parqueo ";
+    }
+}

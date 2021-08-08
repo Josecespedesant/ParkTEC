@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import { searchParkingLot, searchParkingLots } from "../components/ParkingLots.js"
+import { searchParkingLot, searchParkingLots , deleteParkingLot} from "../components/ParkingLots.js"
 
 var app = express()
 app.use(express.json())
@@ -41,10 +41,9 @@ app.get("/parkTEC/spaces/:id", function (request, response){
 
 app.delete("/parkTEC/spaces/:id", function(request, response){
     const id = request.params.id;
-
+    const result = deleteParkingLot(id);
+    response.send(result);
 });
-
-
 
 var server = app.listen(80, function(){
     var host = server.address().address;
