@@ -1,6 +1,10 @@
 import cors from "cors";
 import express from "express";
-import { searchParkingLot, searchParkingLots , deleteParkingLot} from "../components/ParkingLots.js"
+import { searchParkingLot, searchParkingLots , deleteParkingLot, newParkingLot , 
+    editParkingLot, 
+    searchReservations,
+    addReservation,
+    deleteReservations} from "../components/ParkingLots.js"
 
 var app = express()
 app.use(express.json())
@@ -38,10 +42,39 @@ app.get("/parkTEC/spaces/:id", function (request, response){
     response.send(result);
 });
 
+app.post("/parkTEC/spaces", function(request, response){
+    const preferencial = request.body.esPreferencial;
+    const result = newParkingLot(preferencial);
+    response.send(result);
+});
+
+app.put("/parkTEC/spaces/:id", function (request, response){
+    const id = request.params.id;
+    const preferencial = request.body.esPreferencial;
+    const result = editParkingLot(id, preferencial)
+    response.send(result);
+});
 
 app.delete("/parkTEC/spaces/:id", function(request, response){
     const id = request.params.id;
     const result = deleteParkingLot(id);
+    response.send(result);
+});
+
+app.get("/parkTEC/reservations", function(request, response){
+    const result = searchReservations();
+    response.send(result);
+});
+
+app.post("/parkTEC/reservations", function(request, response){
+    const placa = request.body.placa;
+    const result = addReservation(placa);
+    response.send(result);
+});
+
+app.delete("/parkTEC/reservations/:id", function(request, response){
+    const id = request.params.id;
+    const result = deleteReservations(id);
     response.send(result);
 });
 
