@@ -32,6 +32,7 @@ export const newParkingLot = (pref)=>{
         parkingLots.set(newIndex, infoSpace);
         return "Se ha agregado el espacio ".concat(newIndex); 
     }else{
+        
         return "El parámetro preferencial debe ser un 0 (no) o un 1 (si)"
     }
 } 

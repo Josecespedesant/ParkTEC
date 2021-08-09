@@ -32,33 +32,53 @@ app.get("/parkTEC/spaces", function (request, response){
         const result = searchParkingLots("in-use");
         response.send(result);
     }else{
-        response.send("Wrong!");
+        response.json("Error : Argument must be free or in use");
     }
 });
 
 app.get("/parkTEC/spaces/:id", function (request, response){
     const id = request.params.id;
-    const result = searchParkingLot(id)
-    response.send(result);
+    if(!isNaN(id)){
+        const result = searchParkingLot(id)
+        response.send(result);
+    }else{
+        response.json("Error : Parameter must be a number");
+    }
+//HERE
+    
 });
 
 app.post("/parkTEC/spaces", function(request, response){
     const preferencial = request.body.esPreferencial;
-    const result = newParkingLot(preferencial);
-    response.send(result);
+    if(!isNaN(preferencial)){
+        const result = newParkingLot(preferencial);
+        response.send(result);
+    }else{
+        response.json("Error : esPreferencial must be a 1 for yes and 0 for no");
+    }
 });
 
 app.put("/parkTEC/spaces/:id", function (request, response){
     const id = request.params.id;
     const preferencial = request.body.esPreferencial;
-    const result = editParkingLot(id, preferencial)
-    response.send(result);
+    if(!isNaN(id)&&!isNaN(preferencial)){
+        const result = editParkingLot(id, preferencial)
+        response.send(result);
+    }else{
+        response.json("Error : Both parameters must be numbers");
+    }
+    
 });
 
 app.delete("/parkTEC/spaces/:id", function(request, response){
     const id = request.params.id;
-    const result = deleteParkingLot(id);
-    response.send(result);
+    if(!isNaN(id)){
+        const result = deleteParkingLot(id);
+        response.send(result);
+    }else{
+        response.json("Error : The parameter must be a number");
+    }
+    
 });
 
 app.get("/parkTEC/reservations", function(request, response){
@@ -68,14 +88,24 @@ app.get("/parkTEC/reservations", function(request, response){
 
 app.post("/parkTEC/reservations", function(request, response){
     const placa = request.body.placa;
-    const result = addReservation(placa);
-    response.send(result);
+    if(!isNaN(placa)){
+        const result = addReservation(placa);
+        response.send(result);
+    }else{
+        response.json("Error : The plate must be a number");
+    }
+    
 });
 
 app.delete("/parkTEC/reservations/:id", function(request, response){
     const id = request.params.id;
-    const result = deleteReservations(id);
-    response.send(result);
+    if(!isNaN(id)){
+        const result = deleteReservations(id);
+        response.send(result);
+    }else{
+        response.json("Error : The parameter must be a number");
+    }
+    
 });
 
 var server = app.listen(80, function(){
