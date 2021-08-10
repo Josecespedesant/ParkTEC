@@ -10,7 +10,7 @@ var app = express()
 app.use(express.json())
 app.use(cors());
 
-app.all('/', function(req, res, next)  {   
+app.all('/parkTEC/*', function(req, res, next)  {   
     // Set respons header (geen idee of dit compleet is)   
     res.header("Access-Control-Allow-Origin","");   
     res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE,OPTIONS");
@@ -32,7 +32,7 @@ app.get("/parkTEC/spaces", function (request, response){
         const result = searchParkingLots("in-use");
         response.send(result);
     }else{
-        response.json("Error : Argument must be free or in use");
+        response.status(400).send({error:"Argument must be free or in use"});
     }
 });
 
@@ -42,9 +42,8 @@ app.get("/parkTEC/spaces/:id", function (request, response){
         const result = searchParkingLot(id)
         response.send(result);
     }else{
-        response.json("Error : Parameter must be a number");
+        response.status(400).send({error:"Parameter must be a number"});
     }
-//HERE
     
 });
 
@@ -54,7 +53,7 @@ app.post("/parkTEC/spaces", function(request, response){
         const result = newParkingLot(preferencial);
         response.send(result);
     }else{
-        response.json("Error : esPreferencial must be a 1 for yes and 0 for no");
+        response.status(400).send({error : "esPreferencial must be a 1 for yes and 0 for no"});
     }
 });
 
@@ -65,7 +64,7 @@ app.put("/parkTEC/spaces/:id", function (request, response){
         const result = editParkingLot(id, preferencial)
         response.send(result);
     }else{
-        response.json("Error : Both parameters must be numbers");
+        response.status(400).send({error : "Both parameters must be numbers"});
     }
     
 });
@@ -76,14 +75,14 @@ app.delete("/parkTEC/spaces/:id", function(request, response){
         const result = deleteParkingLot(id);
         response.send(result);
     }else{
-        response.json("Error : The parameter must be a number");
+        response.status(400).send({error : "The parameter must be a number"});
     }
     
 });
 
 app.get("/parkTEC/reservations", function(request, response){
     const result = searchReservations();
-    response.send(result);
+    response.status(400).send(result);
 });
 
 app.post("/parkTEC/reservations", function(request, response){
@@ -92,7 +91,7 @@ app.post("/parkTEC/reservations", function(request, response){
         const result = addReservation(placa);
         response.send(result);
     }else{
-        response.json("Error : The plate must be a number");
+        response.status(400).send({error : "The plate must be a number"});
     }
     
 });
@@ -103,7 +102,7 @@ app.delete("/parkTEC/reservations/:id", function(request, response){
         const result = deleteReservations(id);
         response.send(result);
     }else{
-        response.json("Error : The parameter must be a number");
+        response.status(400).send({error : "The parameter must be a number"});
     }
     
 });
